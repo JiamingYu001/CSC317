@@ -1,0 +1,364 @@
+/* Color theme taken from ai-1 */
+:root {
+    --bg: #0d0f12;
+    --text: #e8eaf0;
+    --muted: #a3a9b6;
+    --card: #ffffff;
+    --card-ink: #0e1013;
+    --card-contrast: #0b0b0d;
+    --border: #1e222a;
+    --accent: #8ab4ff;
+    --accent-hover: #a5c6ff;
+    --button-bg: #161a20;
+    --button-hover: #1d222a;
+    --footer-bg: #0b0d10;
+    --project-bg: #121418;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+body.site {
+    background: radial-gradient(1200px 800px at 70% -10%, rgba(138,180,255,.08), transparent 60%), var(--bg);
+    color: var(--text);
+}
+
+/* Added fixed header and transparent scroll under from ai-2 */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    width: 100vw;
+
+    background:
+            radial-gradient(120% 100% at 0% 0%, rgba(166, 95, 78, 0.06) 0%, transparent 60%),
+            radial-gradient(120% 100% at 100% 0%, rgba(111, 125, 89, 0.07) 0%, transparent 60%),
+            rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
+
+    padding: 20px 0;
+    transition: background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Placed avatar to left of name from all ai css*/
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.header-inner img.avatar {
+    flex-shrink: 0;
+}
+
+.title-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    color: var(--text);
+}
+
+.site-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 40%);
+    pointer-events: none;
+}
+
+.site-header > * {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.site-header.scrolled {
+    background:
+            radial-gradient(120% 100% at 0% 0%, rgba(166, 95, 78, 0.08) 0%, transparent 60%),
+            radial-gradient(120% 100% at 100% 0%, rgba(111, 125, 89, 0.1) 0%, transparent 60%),
+            rgba(255, 255, 255, 0.12);
+    border-bottom-color: var(--border);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: left;
+}
+
+.header-text h1 {
+    font-size: 2rem;
+    color: var(--text);
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+}
+
+.header-text p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    margin: 0;
+    line-height: 1.6;
+    max-width: 55ch;
+}
+
+/* ===== Avatar ===== */
+.avatar {
+    width: clamp(96px, 10vw + 60px, 140px);
+    height: clamp(96px, 10vw + 60px, 140px);
+    border-radius: 50%;
+    display: block;
+    border: 3px solid #e6e9f2;
+    box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    transform: translateZ(0);
+    animation: float 4s ease-in-out infinite;
+    transition: filter .3s ease, transform .25s ease;
+    background: #fff;
+    object-fit: cover;
+}
+
+/* Avatar animations from ai-1*/
+.avatar:hover {
+    filter: saturate(1.08) drop-shadow(0 10px 20px rgba(0,0,0,.18));
+    transform: translateY(-2px);
+}
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@media (max-width: 700px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .header-text h1 {
+        margin-top: 0.5rem;
+    }
+}
+
+/* Added section title style from ai-2 */
+.site-main {
+    padding-bottom: 2rem;
+}
+
+.section {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+    font-weight: 400;
+}
+
+.section-text {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    text-align: left;
+    color: var(--text);
+    margin: 0;
+}
+
+/* ===== Skills Section ===== */
+.skills-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 20px auto;
+    max-width: 1000px;
+}
+
+.skill-group {
+    background-color: rgba(255,255,255,.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 15px 20px;
+    min-width: 250px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color .25s ease;
+    color: var(--text);
+}
+
+.skill-group:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    border-color: rgba(255,255,255,.3);
+}
+
+.skills-list,
+.skills .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.skills-list {
+    font-size: 1.2em;
+    color: var(--text);
+}
+
+/* ===== Projects Section ===== */
+.projects {
+    text-align: left;
+}
+
+.projects .section-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.project {
+    background-color: var(--project-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+    margin-bottom: 20px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color .25s ease;
+    color: var(--text);
+}
+
+.project:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
+    border-color: #2b313c;
+}
+
+.project-list {
+    text-align: left;
+}
+
+.site-footer {
+    background-color: var(--footer-bg);
+    padding: 20px;
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text);
+}
+
+.contact-list {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    list-style: none;
+}
+
+/* Link and button colors updated to match ai-1 colorscheme */
+a,
+a.link {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover,
+a:focus,
+a.link:hover,
+a.link:focus {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+.theme-button {
+    padding: 8px 12px;
+    background-color: var(--button-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    color: var(--text);
+}
+
+.theme-button:hover {
+    background-color: var(--button-hover);
+    border-color: var(--accent);
+    color: var(--accent-hover);
+}
+
+.theme-button.active {
+    background-color: var(--accent);
+    color: var(--card-contrast);
+    border-color: transparent;
+}
+
+/* ===== Theme Switcher ===== */
+.theme-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--button-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    padding: 12px;
+    z-index: 1000;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.theme-switcher h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    text-align: center;
+    color: var(--text);
+}
+
+.theme-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.theme-button {
+    padding: 8px 12px;
+    background-color: var(--button-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    color: var(--text);
+}
+
+.theme-button:hover {
+    background-color: var(--button-hover);
+}
+
+.theme-button.active {
+    background-color: var(--accent);
+    color: var(--card-contrast);
+    border-color: transparent;
+}
