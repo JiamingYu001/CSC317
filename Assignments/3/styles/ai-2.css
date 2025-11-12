@@ -1,0 +1,430 @@
+/* =========================
+   MATRIX AESTHETIC THEME
+   Works with your existing HTML structure
+   ========================= */
+
+/* Optional matrix-y fonts (safe fallbacks included) */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+
+:root {
+    --bg: #020403;                 /* near-black */
+    --panel: #06110b;              /* very dark green-tinted panel */
+    --panel-2: #081a12;            /* slightly lighter for contrast */
+    --text: #c3f7c7;               /* pale neon green text */
+    --muted: #78e08f;              /* secondary green */
+    --neon: #00ff9d;               /* bright neon accent */
+    --grid: rgba(0, 255, 157, 0.08);
+    --line: rgba(0, 255, 157, 0.18);
+    --link: #8afba8;
+    --link-hover: #b5ffd0;
+    --shadow: 0 0 20px rgba(0, 255, 157, 0.15), 0 0 2px rgba(0, 255, 157, 0.35);
+    --radius: 14px;
+    --duration: 220ms;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body.site {
+    margin: 0;
+    color: var(--text);
+    background: var(--bg);
+    font-family: "Share Tech Mono", "VT323", Consolas, "Courier New", monospace;
+    line-height: 1.6;
+    /* Subtle animated code-rain background using layered gradients */
+    background-image:
+        /* vertical streams */
+            repeating-linear-gradient( to bottom,
+            rgba(0,255,157,0.05) 0px, rgba(0,255,157,0.05) 2px,
+            transparent 2px, transparent 6px),
+                /* grid */
+            linear-gradient(to right, var(--grid) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+    background-size:
+            100% 24px,            /* rain spacing */
+            40px 100%,            /* vertical grid */
+            100% 40px;            /* horizontal grid */
+    animation: rain 12s linear infinite;
+}
+
+/* Reduce/disable motion for sensitive users */
+@media (prefers-reduced-motion: reduce) {
+    body.site { animation: none; background-image: none; background-color: var(--bg); }
+    .avatar::after, .section:hover, .project:hover, .theme-button:hover { transition: none; }
+}
+
+@keyframes rain {
+    0%   { background-position: 0 0, 0 0, 0 0; }
+    100% { background-position: 0 24px, 0 0, 0 0; }
+}
+
+/* Utility container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* -------------------------
+   HEADER
+   ------------------------- */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: linear-gradient(180deg, rgba(0,0,0,0.75), rgba(0,0,0,0.35));
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(6px);
+}
+
+.header-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 18px;
+}
+
+.site-title {
+    margin: 0;
+    font-size: clamp(28px, 5vw, 42px);
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px rgba(0,255,157,0.5);
+}
+
+/* -------------------------
+   AVATAR with scan/glitch effect
+   ------------------------- */
+.avatar {
+    width: clamp(90px, 18vw, 140px);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    position: relative;
+    display: block;
+    filter: contrast(1.05) saturate(0.9);
+    transform: translateZ(0);
+    overflow: hidden;
+}
+
+/* animated scanline overlay */
+.avatar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+            linear-gradient(to bottom,
+            rgba(0,255,157,0) 0%,
+            rgba(0,255,157,0.15) 50%,
+            rgba(0,255,157,0) 100%);
+    mix-blend-mode: screen;
+    animation: scan 3.6s ease-in-out infinite;
+}
+
+@keyframes scan {
+    0%   { transform: translateY(-120%); opacity: 0.2; }
+    50%  { transform: translateY(0%);    opacity: 0.35; }
+    100% { transform: translateY(120%);  opacity: 0.2; }
+}
+
+/* slight hover tilt & glow */
+.avatar:hover {
+    box-shadow: 0 0 0 1px var(--neon), 0 0 24px rgba(0,255,157,0.3);
+    transform: perspective(500px) rotateX(2deg) rotateY(-2deg);
+    transition: transform var(--duration) ease, box-shadow var(--duration) ease;
+}
+
+/* Title group (kept simple; your HTML already wraps it) */
+.title-group { display: flex; align-items: center; gap: 8px; }
+
+/* -------------------------
+   SECTIONS
+   ------------------------- */
+.section {
+    background: linear-gradient(180deg, rgba(10,25,18,0.55), rgba(6,17,11,0.55));
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px;
+    margin: 20px 0;
+    box-shadow: 0 0 0 1px rgba(0,255,157,0.06) inset;
+    transition: transform var(--duration) ease, box-shadow var(--duration) ease, border-color var(--duration) ease;
+}
+
+.section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1px var(--neon) inset, 0 0 24px rgba(0,255,157,0.15);
+    border-color: rgba(0,255,157,0.35);
+}
+
+.section-title {
+    margin: 0 0 14px;
+    font-size: clamp(20px, 3.2vw, 28px);
+    color: var(--neon);
+    text-shadow: 0 0 6px rgba(0,255,157,0.35);
+    letter-spacing: 0.5px;
+}
+
+.section-text { margin: 0; }
+
+/* -------------------------
+   SKILLS GRID (3 columns centered)
+   ------------------------- */
+.skills .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    justify-items: center; /* center cards */
+}
+
+.skill-group {
+    width: 100%;
+    max-width: 300px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 0 0 1px rgba(0,255,157,0.06) inset;
+    transition: transform var(--duration) ease, box-shadow var(--duration) ease;
+}
+
+.skill-group:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 1px var(--neon) inset, 0 0 18px rgba(0,255,157,0.18);
+}
+
+.skill-title {
+    margin: 0 0 8px;
+    color: var(--muted);
+    font-size: 18px;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-item {
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(0,255,157,0.15);
+}
+.list-item:last-child { border-bottom: none; }
+
+/* -------------------------
+   PROJECTS (stacked)
+   ------------------------- */
+.projects .project {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px;
+    margin: 14px 0;
+    transition: transform var(--duration) ease, box-shadow var(--duration) ease, border-color var(--duration) ease;
+}
+
+.projects .project:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0,255,157,0.35);
+    box-shadow: 0 0 0 1px var(--neon) inset, 0 0 22px rgba(0,255,157,0.18);
+}
+
+.project-title {
+    margin: 0 0 8px;
+    color: var(--neon);
+}
+
+/* details/summary as an animated “terminal” toggle */
+.project-details {
+    border: 1px dashed rgba(0,255,157,0.25);
+    border-radius: 10px;
+    padding: 10px;
+    background: rgba(0, 255, 157, 0.04);
+    transition: border-color var(--duration) ease, background var(--duration) ease;
+}
+
+.project-details[open] {
+    background: rgba(0, 255, 157, 0.08);
+    border-color: rgba(0,255,157,0.5);
+}
+
+.project-details > summary {
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+    position: relative;
+    padding-right: 26px;
+    transition: color var(--duration) ease, text-shadow var(--duration) ease;
+}
+.project-details > summary::-webkit-details-marker { display: none; }
+
+.project-details > summary::after {
+    content: "▸";
+    position: absolute;
+    right: 4px;
+    top: 0;
+    transform: translateY(2px) rotate(0deg);
+    transition: transform var(--duration) ease, color var(--duration) ease;
+    color: var(--link);
+    text-shadow: 0 0 6px rgba(0,255,157,0.45);
+}
+.project-details[open] > summary::after { transform: translateY(2px) rotate(90deg); color: var(--neon); }
+
+.project-details > summary:hover {
+    color: var(--link-hover);
+    text-shadow: 0 0 8px rgba(0,255,157,0.55);
+}
+
+/* -------------------------
+   LINKS
+   ------------------------- */
+a.link {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(0,255,157,0.35);
+    transition: color var(--duration) ease, text-shadow var(--duration) ease, border-color var(--duration) ease;
+}
+a.link:hover {
+    color: var(--link-hover);
+    text-shadow: 0 0 8px rgba(0,255,157,0.5);
+    border-color: var(--neon);
+}
+
+/* -------------------------
+   FOOTER (horizontal links)
+   ------------------------- */
+.site-footer {
+    border-top: 1px solid var(--line);
+    margin-top: 24px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.75), rgba(0,0,0,0.25));
+}
+
+.site-footer .container { padding-top: 20px; padding-bottom: 28px; }
+
+.contact-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    justify-content: center;
+    align-items: center;
+}
+
+/* -------------------------
+   THEME SWITCHER (styled, no HTML changes)
+   ------------------------- */
+.theme-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.65);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(6px);
+}
+
+.theme-switcher h3 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.theme-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.theme-button {
+    font: inherit;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(8,26,18,0.8), rgba(5,18,12,0.8));
+    color: var(--text);
+    cursor: pointer;
+    transition: transform var(--duration) ease, box-shadow var(--duration) ease, border-color var(--duration) ease, color var(--duration) ease;
+}
+
+.theme-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 1px var(--neon) inset, 0 0 14px rgba(0,255,157,0.25);
+    border-color: rgba(0,255,157,0.45);
+    color: var(--link-hover);
+}
+
+.theme-button.active {
+    border-color: var(--neon);
+    box-shadow: 0 0 0 1px var(--neon) inset, 0 0 14px rgba(0,255,157,0.25);
+}
+
+/* -------------------------
+   RESPONSIVE
+   ------------------------- */
+@media (max-width: 800px) {
+    .header-inner {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+    }
+    .title-group { justify-content: center; }
+    .avatar { margin-bottom: 8px; }
+}
+
+@media (max-width: 780px) {
+    .skills .skills-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .skills .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Theme Switcher Styling */
+.theme-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    z-index: 1000;
+}
+
+.theme-switcher h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.theme-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.theme-button {
+    padding: 8px 12px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.theme-button:hover {
+    background-color: #e0e0e0;
+}
+
+.theme-button.active {
+    background-color: #007bff;
+    color: white;
+    border-color: #0069d9;
+}
