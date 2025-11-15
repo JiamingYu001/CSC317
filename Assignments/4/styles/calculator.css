@@ -106,8 +106,6 @@ button {
 }
 
 .operator:active, .operator.active {
-    background-color: #ffffff;
-    color: #f1a33c;
     transform: scale(0.95);
 }
 
@@ -118,7 +116,6 @@ button {
 }
 
 .utility:active, .utility.active {
-    background-color: #d4d4d4;
     transform: scale(0.95);
 }
 
@@ -130,8 +127,6 @@ button:hover {
 /* Active state for equals button */
 [data-action="equals"]:active,
 [data-action="equals"].active {
-    background-color: #ffffff;
-    color: #f1a33c;
     transform: scale(0.95);
 }
 
